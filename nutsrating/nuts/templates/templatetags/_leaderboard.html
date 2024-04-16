@@ -1,0 +1,18 @@
+{% load leader_board_tag %}
+{% load static %}
+
+<div class="mt-5">
+    {% for item in users %}
+    <div class="d-flex flex-column bd-highlight fs-5">
+        <div class="p-2 bd-highlight">
+            <div class="d-flex justify-content-between text-warning">
+                <div class="p-2 bd-highlight">
+                    <a href="{% url 'profile' item.pk %}"
+                       class="btn text-warning shadow-none fs-5">{{item.unchanged_name }}</a>
+                </div>
+                <div class="p-2 bd-highlight">{{item.rating}}</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

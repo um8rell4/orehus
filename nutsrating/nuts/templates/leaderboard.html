@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load leader_board_tag %}
+{% block title %}
+{{ title }}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{% static 'css/leadboard.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-center text-warning mt-5 pt-5 fs-1">
+        ТОПЧИК
+    </div>
+    {% show_leaderboard %}
+</div>
+{% endblock %}

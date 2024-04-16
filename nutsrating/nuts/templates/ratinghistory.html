@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load rating_history %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static 'css/rating_history.css' %}" />
+{% endblock %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content%}
+<div class="container">
+
+    {% rating_logs as history %}
+    {% for item in history %}
+
+    <div class="card mb-3 bg-transparent text-white border-0">
+
+        <div class="card-body bg-transparent">
+            <h5 class="card-title text-warning" ><a href="{% url 'profile' item.orehus_user.pk %}"
+                                                   class="btn text-warning shadow-none fs-5">{{ item.orehus_user }}
+            </a></h5>
+            <p class="card-text">{{ item.who_changed }} добавил "
+
+                {% if item.operation < 0 %}
+                <span class="text-danger">{{ item.operation }}</span>
+                {% else %}
+                <span class="text-success">{{ item.operation }}</span>
+                {% endif %}
+                " баллов
+                {% if item.comment %}
+                {{ item.orehus_user }} с комментариями:
+                <br><br> <span>{{ item.comment }}   </span>
+                {% else %}
+                {{ item.orehus_user }} без комментариев!
+                {% endif %}
+                <br><br>
+                {% if item.operation < 0 %}
+                Было:
+                <span class="text-light">
+                    {{ item.rating_was }}
+                </span>
+                <br>
+                Стало:
+                <span class="text-danger">
+                    {{ item.rating_new }}
+                </span>
+                {% else %}
+                Было:
+                <span>
+                    {{ item.rating_was }}
+                </span>
+                <br>
+                Стало:
+                <span class="text-success">
+                    {{ item.rating_new }}
+                </span>
+                {% endif %}
+            </p>
+            <p class="card-text"><small class="text-muted">{{ item.datetime_comment|date:"d-m-y H:i" }}</small></p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

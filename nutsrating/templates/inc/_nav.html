@@ -1,0 +1,38 @@
+{% load static %}
+<header class="p-3">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="{% url 'ratinghistory' %}"
+               class="d-flex align-items-center mb-2 mb-lg-0 text-warning text-decoration-none">
+                <img class="bi me-2" width="40" src="{% static 'img/orehus.png' %}" alt="">
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'addrating' %}" class="nav-link px-2 text-white">Добавить рейтинг</a></li>
+                {% endif %}
+                <li><a href="{% url 'ratinghistory' %}" class="nav-link px-2 text-white">История баллов</a></li>
+                <li><a href="{% url 'leadboard' %}" class="nav-link px-2 text-white">ДоскаРейтинга</a></li>
+            </ul>
+
+            {% if request.user.is_authenticated %}
+            <div class="text-end">
+                <span class="text-warning me-3">Привет, <a href="{% url 'personality' %}"
+                                                            class="text-warning shadow-none">
+                    {{ user.unchanged_name }}</a> ({{user.rating}})</span>
+                <a class="btn btn-warning" href="{% url 'logout' %}">Выйти из Орешника</a>
+            </div>
+            {% else %}
+            <div class="text-end">
+<!--                          <button type="button" class="btn btn-outline-light me-2">Login</button>-->
+                                <a class="btn btn-outline-light me-2" href="{% url 'register' %}">ПолучитьПаспорт</a>
+
+<!--                <button type="button" class="btn btn-warning">ВходВОрешник</button>-->
+                <a class="btn btn-warning" href="{% url 'login' %}">ВходВОрешник</a>
+
+
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</header>

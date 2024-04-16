@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block links %}
+<link rel="stylesheet" href="{% static 'css/addraiting.css' %}" />
+{% endblock %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container mt-3">
+    <form action="{% url 'addrating' %}" method="post">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        <div class="d-grid gap-2 mt-5 mb-5">
+            <button type="submit" class="btn btn-warning ">Добавить баллы</button>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

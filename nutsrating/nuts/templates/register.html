@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+
+{% block content %}
+<section class="gradient-custom">
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-transparent text-white border-warning" style="border-radius: 1rem;">
+          <div class="card-body bg-transparent p-5 text-center">
+
+            <div class="">
+
+              <h2 class="fw-bold mb-2 text-warning text-uppercase">Получение паспорта в орешник</h2>
+              <p class="text-white-50 mb-5">Через мгновение вы получите орех!</p>
+
+              <form action="" method="post">
+                {% csrf_token %}
+
+
+
+              <div class="form-outline form-white mb-4">
+                {{ form.username }}
+                <label class="form-label">Логин</label>
+              </div>
+
+
+
+
+              <div class="form-outline form-white mb-4">
+                {{ form.unchanged_name }}
+                <label class="form-label">Ваше имя</label>
+              </div>
+
+                <div class="form-outline form-white mb-4">
+                  <label class="form-label">Немного о себе:</label>
+                {{ form.bio }}
+              </div>
+
+                <div class="form-outline form-white mb-4">
+                {{ form.birth_date }}
+                <label class="form-label">Дата рождения</label>
+              </div>
+
+                 <div class="form-outline form-white mb-4">
+                {{ form.password1 }}
+                <label class="form-label">Пароль</label>
+              </div>
+
+                 <div class="form-outline form-white mb-4">
+                {{ form.password2 }}
+                <label class="form-label">Повторите пароль</label>
+              </div>
+
+
+              <button class="btn btn-outline-warning btn-lg" type="submit">Получить орех!</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load rating_history %}
+
+{% block title %}
+{{ orehus_user.first_name }}
+{% endblock %}
+
+{% block content %}
+<section class="h-80">
+    <div class="container py-5 h-80">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-9 col-xl-7">
+                <div class="card bg-transparent border-1 border-warning">
+                    <div class="rounded-top text-white d-flex flex-row bg-warning" style="height:10%;">
+
+
+                        <div class="col-md-3 border-right">
+                            <div class="d-flex flex-column align-items-center text-center p-3 py-2"><img class="rounded-circle mt-0"
+                                                                                                         width="150px"
+                                                                                                         src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">{{orehus_user.unchanged_name}}</span>
+                                {% if orehus_user.user_vk_url %}
+
+                                <a class="text-decoration-none" href="{{ user.user_vk_url }}" target="_blank"><span class="text-primary">VK
+                                    {% endif %}
+                                </span></a><span></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+            <div class="p-3 py-5">
+                <div
+                        class="d-flex justify-content-between align-items-center"><span class="">Биография:
+                </span></div>
+                {{ orehus_user.bio }}
+                <div class="col-md-12"><label class="labels mt-3">Знак зодиака:</label><span class="me-2">
+                    {{ orehus_user.user_zodiac }} <img src="{%static 'orehus_user.user_zodiac.user_zodiac_sign_img' %}"
+                                                       alt=""></span></div>
+                <br>
+                <div class="col-md-12"><label class="labels">Дата рождения: </label><span class="me-2">
+                    {{ orehus_user.birth_date|date:"d M Y" }}</span></div>
+            </div>
+        </div>
+
+
+
+
+                        <!--            -->
+                        <!--            <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">-->
+                        <!--              <img src="{% static 'img/orehus.png' %}" alt="Generic placeholder image"-->
+                        <!--                   class="img-fluid mt-4 mb-2"-->
+                        <!--                   style="width: 150px; z-index: 1">-->
+                        <!--            </div>-->
+                        <!--            <div class="ms-3 text-black" style="margin-top: 130px;">-->
+                        <!--              <h5 class="fs-1">{{ orehus_user.first_name }}</h5>-->
+                        <!--            </div>-->
+
+
+
+
+                    </div>
+                    <div class="p-4 text-black bg-warning rounded-bottom">
+                        <div class="d-flex justify-content-end text-center py-1">
+                            <div>
+                                <p class="mb-1 h5">{{ orehus_user.rating }}</p>
+                                <p class="small text-muted fs-5 mb-0">Рейтинг</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 text-white">
+                        <!--            <div class="mb-5">-->
+                        <!--              <p class="lead fw-normal mb-1">Кто я?</p>-->
+                        <!--              <div class="p-4" style="">-->
+                        <!--                <p class="font-italic mb-1">Web Developer</p>-->
+                        <!--                <p class="font-italic mb-1">Lives in New York</p>-->
+                        <!--                <p class="font-italic mb-0">Photographer</p>-->
+                        <!--              </div>-->
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <p class="lead fw-normal mb-0 text-warning">История рейтинга:</p>
+                    </div>
+                    {% for item in get_user_history %}
+
+                    <div class="card mb-3 bg-transparent text-white border-0">
+
+                        <div class="card-body bg-transparent">
+                            <h5 class="card-title text-warning">{{ item.orehus_user }}</h5>
+                            <p class="card-text">{{ item.who_changed }} добавил "
+                                {% if item.operation < 0 %}
+                                <span class="text-danger">{{ item.operation}}</span>
+                                {% else %}
+                                <span class="text-success">{{ item.operation}}</span>
+                                {% endif %}
+
+                                " баллов
+
+                                {% if item.comment %}
+                                {{ item.orehus_user }} с комментариями:
+                                <br><br> <span>{{ item.comment }}   </span>
+                                {% else %}
+                                {{ item.orehus_user }} без комментариев!
+                                {% endif %}
+                                <br><br>
+                                {% if item.operation < 0 %}
+                                Было:
+                                <span>
+                    {{ item.rating_was }}
+                </span>
+                                <br>
+                                Стало:
+                                <span class="text-danger">
+                    {{ item.rating_new }}
+                </span>
+
+                                {% else %}
+
+                                Было:
+                                <span>
+                    {{ item.rating_was }}
+                </span>
+                                <br>
+                                Стало:
+                                <span class="text-success">
+                    {{ item.rating_new }}
+                </span>
+
+                                {% endif %}
+                            </p>
+                            <p class="card-text"><small class="text-muted">{{ item.datetime_comment|date:"d-m-y H:i" }}</small></p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock %}
