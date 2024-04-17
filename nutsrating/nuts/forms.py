@@ -30,7 +30,7 @@ class UserRegisterForm(UserCreationForm):
     unchanged_name = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'class': 'form-control form-control-lg'}))
     bio = forms.CharField(label='О себе', required=False, widget=forms.Textarea(attrs={'class': 'form-control',
                                                                                        'rows': 8}))
-    birth_date = forms.DateField(label='Дата рождения', input_formats=['%Y-%m-%d'], widget=forms.DateInput(
+    birth_date = forms.DateField(label='Дата рождения', input_formats=['%d.%m.%Y'], widget=forms.DateInput(
         attrs={
         'class':
                                                                                                    'form-control'}))

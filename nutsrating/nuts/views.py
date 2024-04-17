@@ -12,26 +12,22 @@ def leader_board(request):
     return render(request, 'leaderboard.html', {"title": title})
 
 
-@login_required()
-# @require_http_methods(["POST"])
+@login_required
 def add_rating(request):
     title = 'Добавить рейтинг'
     if request.method == 'POST':
         user_form = OrehusForms(request.POST)
-
-        if User.is_authenticated:
-            username = request.user.unchanged_name
         if user_form.is_valid():
             user = CustomUser.objects.get(unchanged_name=user_form.cleaned_data['orehus_user'])
             rating_was = user.rating
             user.rating = user.rating + user_form.cleaned_data['operation']
+            user.save()  # Сохранение изменений в базе данных
             rating_new = user.rating
-            CustomUser.objects.filter(first_name=user_form.cleaned_data['orehus_user']).update(rating=user.rating)
             comment = user_form.cleaned_data['comment']
             orehus_user = user_form.cleaned_data['orehus_user']
             operation = user_form.cleaned_data['operation']
             OrehusChange.objects.create(comment=comment, operation=operation, orehus_user=orehus_user,
-                                        who_changed=username, rating_was=rating_was, rating_new=rating_new)
+                                        who_changed=request.user.username, rating_was=rating_was, rating_new=rating_new)
             return redirect('leadboard')
     else:
         user_form = OrehusForms()
@@ -109,3 +105,7 @@ def user_register(request):
         else:
             form = UserRegisterForm()
         return render(request, 'register.html', {"form": form})
+
+
+def handling_404(request, exception):
+    return render(request, '404.html',{"title": "Not Found"}, status=404)
